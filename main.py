@@ -1,6 +1,7 @@
 from gym_torcs import TorcsEnv
 import pygame
 import sys
+import time
 
 LINUX = 0
 MAC = 1
@@ -289,9 +290,11 @@ def env_setup(joystick_id):
     joypad = Controller(joystick_id)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     
     joystick_id = 0
+    delay = 0.05
+    
     env_setup(joystick_id)
     
     #### Main loop
@@ -300,6 +303,8 @@ if __name__ == "__main__":
 
         # single step
         ob, reward, done, _ = env.step(action)
+        
+        time.sleep(delay)
 
     # shut down torcs
     env.end()
