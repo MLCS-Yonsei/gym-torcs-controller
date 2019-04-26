@@ -274,6 +274,7 @@ class Controller:
             left = self.joystick.get_button(PAD_LEFT)
 
         return up, right, down, left
+
 def env_setup(joystick_id):
     #### Generate a Torcs environment
     # enable vision input, the action is steering only (1 dim continuous action)
