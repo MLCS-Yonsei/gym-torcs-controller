@@ -273,24 +273,28 @@ class Controller:
             left = self.joystick.get_button(PAD_LEFT)
 
         return up, right, down, left
+def env_setup(joystick_id):
+    #### Generate a Torcs environment
+    # enable vision input, the action is steering only (1 dim continuous action)
+    env = TorcsEnv(vision=True, throttle=False)
 
-#### Generate a Torcs environment
-# enable vision input, the action is steering only (1 dim continuous action)
-env = TorcsEnv(vision=True, throttle=False)
+    # without vision input, the action is steering and throttle (2 dim continuous action)
+    # env = TorcsEnv(vision=False, throttle=True)
 
-# without vision input, the action is steering and throttle (2 dim continuous action)
-# env = TorcsEnv(vision=False, throttle=True)
+    ob = env.reset(relaunch=True)  # with torcs relaunch (avoid memory leak bug in torcs)
+    # ob = env.reset()  # without torcs relaunch
 
-ob = env.reset(relaunch=True)  # with torcs relaunch (avoid memory leak bug in torcs)
-# ob = env.reset()  # without torcs relaunch
-
-#### Initialize a joystick controller
-joystick_id = 0
-joypad = Controller(joystick_id)
+    #### Initialize a joystick controller
+    joystick_id = 0
+    joypad = Controller(joystick_id)
 
 
-#### Main loop
 if __name__ == "__main__":
+    
+    joystick_id = 0
+    env_setup(joystick_id)
+    
+    #### Main loop
     while True:
         action = joypad.get_left_stick()
 
